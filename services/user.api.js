@@ -21,7 +21,7 @@ export const signup = async (data) => {
 export const dustbinRequest = async (data) => {
   try {
       console.log(data);
-      return await axios.post(`${url}/api/api/dustbins/dustbinrequest`, data);
+      return await axios.post(`${url}/api/dustbins/dustbinrequest`, data);
   } catch (error) {
       console.log(error)
   }
