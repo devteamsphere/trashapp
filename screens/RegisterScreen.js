@@ -156,7 +156,7 @@ const RegistrationScreen = ({navigation}) => {
               textAlign: 'center',
               fontSize: 16,
             }}>
-            Already have account ?Login
+            Already have account ? Login
           </Text>
         </View>
       </ScrollView>
