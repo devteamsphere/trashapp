@@ -1,8 +1,11 @@
 import React from 'react';
+import alert from '../utils/alert';
 import {View, Text, SafeAreaView, Keyboard, Alert} from 'react-native';
 import COLORS from '../theme/colors';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import { signIn } from "../services/user.api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import Loader from '../components/Loader';
 
@@ -10,7 +13,19 @@ const LoginScreen = ({navigation}) => {
   const [inputs, setInputs] = React.useState({email: '', password: ''});
   const [errors, setErrors] = React.useState({});
   const [loading, setLoading] = React.useState(false);
-
+  const handleSubmit =async ()=>{
+    console.log(inputs);
+    const userdata = await signIn(inputs);
+    console.log(userdata);
+    if (userdata.data.code === 200) {
+      AsyncStorage.setItem("token", userdata.data.data.token);
+      AsyncStorage.setItem("user", JSON.stringify(userdata.data.data));
+      navigation.navigate('Home');
+    }
+    else {
+      alert('Error', 'User does not exist');
+    }
+  }
   const validate = async () => {
     Keyboard.dismiss();
     let isValid = true;
@@ -88,7 +103,7 @@ const LoginScreen = ({navigation}) => {
             password
           />
           <Button title="Log In" onPress={()=>{
-            navigation.navigate('Home');
+           onPress={handleSubmit} 
           }} />
           <Text
             onPress={() => navigation.navigate('RegisterScreen')}
