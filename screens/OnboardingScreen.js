@@ -38,12 +38,10 @@ const slides = [
 
 const Slide = ({ item }) => {
   return (
-    <View
-    //  style={{ alignItems: "center", justifyContent: "baseline" }}
-    >
+    <View style={{ alignItems: "center" }}>
       <Image
         source={item?.image}
-        // style={{ height: "30", width, resizeMode: "contain" }}
+        style={{ height: "75%", width, resizeMode: "contain" }}
       />
       <View>
         <Text style={styles.title}>{item?.title}</Text>
@@ -83,7 +81,7 @@ const OnboardingScreen = ({ navigation }) => {
       <View
         style={{
           height: height * 0.25,
-          // justifyContent: "space-between",
+          justifyContent: "space-between",
           paddingHorizontal: 20,
         }}
       >
@@ -91,7 +89,7 @@ const OnboardingScreen = ({ navigation }) => {
         <View
           style={{
             flexDirection: "row",
-            // justifyContent: "center",
+            justifyContent: "center",
             marginTop: 20,
           }}
         >
@@ -195,7 +193,7 @@ const styles = StyleSheet.create({
     maxWidth: "70%",
     textAlign: "center",
     position: "relative",
-    left: "50%",
+    // left: "50%",
     // transform:"translate(-50%)",
     lineHeight: 23,
   },
@@ -224,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: "white",
     backgroundColor: "#00A86B",
-    // justifyContent: "center",
+    justifyContent: "center",
     alignItems: "center",
   },
 });
