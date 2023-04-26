@@ -12,18 +12,27 @@ import {
 import COLORS from '../theme/colors';
 import Button from '../components/Button';
 import Input from '../components/Input';
-
+import {signup} from '../services/user.api';
 
 const RegistrationScreen = ({navigation}) => {
   const [inputs, setInputs] = React.useState({
     email: '',
-    fullname: '',
+    firstName: '',
+    lastName: '',
     phone: '',
     password: '',
   });
   const [errors, setErrors] = React.useState({});
   const [loading, setLoading] = React.useState(false);
-
+  const handleSubmit = async () => {
+    const data = await signup(inputs);
+    if (data.data.code === 200) {
+      navigation.navigate('LoginScreen');
+    }
+    // localStorage.setItem('token', data.data.token);
+    // localStorage.setItem('user', JSON.stringify(data.data.user));
+    console.log(data);
+  };
   const validate = () => {
     Keyboard.dismiss();
     let isValid = true;
@@ -36,8 +45,12 @@ const RegistrationScreen = ({navigation}) => {
       isValid = false;
     }
 
-    if (!inputs.fullname) {
-      handleError('Please input fullname', 'fullname');
+    if (!inputs.firstName) {
+      handleError('Please input firstName', 'firstName');
+      isValid = false;
+    }
+    if (!inputs.lastName) {
+      handleError('Please input lastName', 'lastName');
       isValid = false;
     }
 
@@ -100,12 +113,20 @@ const RegistrationScreen = ({navigation}) => {
           />
 
           <Input
-            onChangeText={text => handleOnchange(text, 'fullname')}
-            onFocus={() => handleError(null, 'fullname')}
+            onChangeText={text => handleOnchange(text, 'firstName')}
+            onFocus={() => handleError(null, 'firstName')}
             iconName="account-outline"
             label="Full Name"
             placeholder="Enter your full name"
-            error={errors.fullname}
+            error={errors.firstName}
+          />
+          <Input
+            onChangeText={text => handleOnchange(text, 'lastName')}
+            onFocus={() => handleError(null, 'lastName')}
+            iconName="account-outline"
+            label="Last Name"
+            placeholder="Enter your full name"
+            error={errors.lastName}
           />
 
           <Input
@@ -126,9 +147,7 @@ const RegistrationScreen = ({navigation}) => {
             error={errors.password}
             password
           />
-          <Button title="Register" onPress={()=>{
-            navigation.navigate('LoginScreen');
-          }} />
+          <Button title="Register" onPress={handleSubmit} />
           <Text
             onPress={() => navigation.goBack()}
             style={{

@@ -14,7 +14,7 @@ const Button = ({title, onPress = () => {}}) => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 18}}>
+      <Text style={{color: COLORS.black, fontWeight: 'bold', fontSize: 18}}>
         {title}
       </Text>
     </TouchableOpacity>

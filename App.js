@@ -133,7 +133,7 @@ export default function App() {
         {/* )} */}
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeNav} />
+        <Stack.Screen name="Home" component={HomeNav} options={{ headerShown: false }}/>
         <Stack.Screen name="ScanScreen" component={ScanScreen} />
       </Stack.Navigator>
 
