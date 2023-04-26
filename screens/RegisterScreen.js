@@ -26,8 +26,16 @@ const RegistrationScreen = ({navigation}) => {
   const [loading, setLoading] = React.useState(false);
   const handleSubmit = async () => {
     const data = await signup(inputs);
-    if (data.data.code === 200) {
-      navigation.navigate('LoginScreen');
+    if(data){
+      if (data.data.code === 200) {
+        navigation.navigate('LoginScreen');
+      }
+      else {
+        alert('Error', 'User does not exist');
+      }
+    }
+    else {
+      alert('Error', 'User does not exist');
     }
     // localStorage.setItem('token', data.data.token);
     // localStorage.setItem('user', JSON.stringify(data.data.user));

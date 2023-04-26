@@ -17,10 +17,15 @@ const LoginScreen = ({navigation}) => {
     console.log(inputs);
     const userdata = await signIn(inputs);
     console.log(userdata);
-    if (userdata.data.code === 200) {
-      AsyncStorage.setItem("token", userdata.data.data.token);
-      AsyncStorage.setItem("user", JSON.stringify(userdata.data.data));
-      navigation.navigate('Home');
+    if(userdata){
+      if (userdata.data.code === 200) {
+        AsyncStorage.setItem("token", userdata.data.data.token);
+        AsyncStorage.setItem("user", JSON.stringify(userdata.data.data));
+        navigation.navigate('Home');
+      }
+      else {
+        alert('Error', 'User does not exist');
+      }
     }
     else {
       alert('Error', 'User does not exist');
