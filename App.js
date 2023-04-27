@@ -17,6 +17,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 // import { TailwindProvider } from "tailwindcss-react-native";
 import OnboardingScreen from "./screens/OnboardingScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ProfileScreen from "./screens/ProfileScreen";
+
 const Stack = createStackNavigator();
 
 const Screen2 = () => {
@@ -44,15 +46,15 @@ export default function App() {
             shadowStyle={styles.shawdow}
             height={55}
             circleWidth={25}
-            bgColor="white"
+            bgColor="#00A86B"
             initialRouteName="Home"
             borderTopLeftRight
             renderCircle={({ selectedTab, navigate }) => (
               <Animated.View style={styles.btnCircleUp}>
                 <TouchableOpacity
                   style={styles.button}
-                  // onPress={() => navigation.navigate('ScanScreen')}
-                  component={() => <ScanScreen navigation={navigation} />}
+                  onPress={() => navigate('ScanScreen')}
+                  // component={() => <ScanScreen navigation={navigation} />}
                 >
                   <Ionicons name={'qr-code-outline'} color="gray" size={25} />
                 </TouchableOpacity>
@@ -72,7 +74,7 @@ export default function App() {
             />
             <CurvedBottomBarExpo.Screen
               name="title2"
-              component={() => <Screen2 />}
+              component={() => <ProfileScreen />}
               position="RIGHT"
             />
                         <CurvedBottomBarExpo.Screen
@@ -105,7 +107,7 @@ export default function App() {
       <Ionicons
         name={icon}
         size={25}
-        color={routeName === selectedTab ? "black" : "gray"}
+        color={routeName === selectedTab ? "black" : "#ddd"}
       />
     );
   };
@@ -122,18 +124,21 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {/* {firstLaunch && ( */}
+      <Stack.Navigator
+      initialRouteName="Home"
+      >
+        {firstLaunch && (
         <Stack.Screen
           options={{ headerShown: false }}
           name="OnBoarding"
           screenOptions={{ headerShown: false }}
           component={OnboardingScreen}
         />
-        {/* )} */}
+       )}
+       
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeNav} options={{ headerShown: false }}/>
+        <Stack.Screen name="Home" component={HomeNav}/>
         <Stack.Screen name="ScanScreen" component={ScanScreen} />
       </Stack.Navigator>
 
