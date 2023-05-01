@@ -23,6 +23,7 @@
     "react-native": "0.71.7",
     "react-native-async-storage": "^0.0.1",
     "react-native-curved-bottom-bar": "^3.2.6",
+    "react-native-paper": "^5.7.0",
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webview": "11.26.0"
