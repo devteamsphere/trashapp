@@ -1,93 +1,107 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import React from "react";
+import { useState } from "react";
+import { StyleSheet, View, Button, TextInput } from "react-native";
+import { WebView } from "react-native-webview";
+import mapTemplate from "../scripts/map-template";
+import { useEffect } from "react";
+import * as Location from "expo-location";
 
 const Home = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState("Not yet scanned");
+  let webRef = undefined;
+  let [mapCenter, setMapCenter] = useState("-121.913, 37.361");
+  const run = `
+      document.body.style.backgroundColor = 'blue';
+      true;
+    `;
 
-  const askForCameraPermission = () => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  };
+  // current location
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  // Request Camera Permission
   useEffect(() => {
-    askForCameraPermission();
+    (async () => {
+      console.log("getting location dhruv");
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log(status);
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        console.log(errorMsg);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location);
+      setLocation(location);
+    })();
   }, []);
 
-  // What happens when we scan the bar code
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    setText(data);
-    console.log("Type: " + type + "\nData: " + data);
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+    console.log(text);
+  }
+
+  const onButtonClick = () => {
+    const [lng, lat] = mapCenter.split(",");
+    webRef.injectJavaScript(
+      `map.setCenter([${parseFloat(lng)}, ${parseFloat(lat)}])`
+    );
   };
 
-  // Check permissions and return the screens
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text>Requesting for camera permission</Text>
-      </View>
-    );
-  }
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text style={{ margin: 10 }}>No access to camera</Text>
-        <Button
-          title={"Allow Camera"}
-          onPress={() => askForCameraPermission()}
-        />
-      </View>
-    );
-  }
+  const handleMapEvent = (event) => {
+    setMapCenter(event.nativeEvent.data);
+  };
 
-  // Return the View
   return (
     <View style={styles.container}>
-      <View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 400, width: 400 }}
+      <WebView
+        ref={(r) => (webRef = r)}
+        source={{ html: mapTemplate }}
+        style={styles.map}
+        onMessage={handleMapEvent}
+      />
+      {/* <View style={styles.buttons}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter coordinates"
+          value={mapCenter}
+          onChangeText={setMapCenter}
         />
-      </View>
-      <Text style={styles.maintext}>{text}</Text>
-
-      {scanned && (
-        <Button
-          title={"Scan again?"}
-          onPress={() => setScanned(false)}
-          color="tomato"
-        />
-      )}
+        <Button title="Go" onPress={onButtonClick} />
+      </View> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
     flex: 1,
+  },
+  buttons: {
+    flexDirection: "row",
+    height: "15%",
     backgroundColor: "#fff",
+    color: "#000",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 12,
   },
-  maintext: {
-    fontSize: 16,
-    margin: 20,
+  textInput: {
+    height: 40,
+    width: "60%",
+    marginRight: 12,
+    paddingLeft: 5,
+    borderWidth: 1,
   },
-  barcodebox: {
+  map: {
+    width: "100%",
+    height: "85%",
     alignItems: "center",
     justifyContent: "center",
-    height: 300,
-    width: 300,
-    overflow: "hidden",
-    borderRadius: 30,
-    backgroundColor: "tomato",
   },
 });
 
-export default Home;
+module.exports = Home;
