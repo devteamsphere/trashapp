@@ -44,7 +44,7 @@ const ScanScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState("Not yet scanned");
+  const [text, setText] = useState();
 
 
   const askForCameraPermission = () => {
@@ -64,7 +64,10 @@ const ScanScreen = ({navigation}) => {
     setScanned(true);
     setText(data);
     console.log("Type: " + type + "\nData: " + data);
-    navigation.navigate('ScanDetailsScreen');
+    console.log(data)
+    console.log(typeof data);
+    if(data)
+    navigation.navigate('ScanDetailsScreen',JSON.parse(data));
   };
 
   // Check permissions and return the screens

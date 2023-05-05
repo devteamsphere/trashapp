@@ -14,35 +14,31 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ScanDetailsScreen() {
+export default function ScanDetailsScreen({route, navigation}) {
+
     const [inputs, setInputs] = React.useState({
         requestType: 'public',
-        latitude: 'jeqohfuiehfhe',
-        longitude: 'fejofoqhofqa',
+        latitude: route.params.latitude,
+        longitude: route.params.longitude,
         description: '',
         imgUrl: 'ncoqwjoijciwq',
         status:'pending',
         dustbinId:'2',
-        userId:'222',
+        userId:'AsyncStorage.getItem("user")._id',
       });
       const [errors, setErrors] = React.useState({});
       const [loading, setLoading] = React.useState(false);
-
+      const [data,setData]=React.useState(route.params);
+;
       const handleSubmit =async ()=>{
         const [error,requestData] = await trashRequest(inputs);
         // console.log(error,"error")
         console.log(requestData);
         if(requestData){
-          // if (requestData.data.code === 200) {
-          //   console.log('hsr');
-          //   navigation.navigate('Home');
-          // }
-          // else {
-          //   alert('Error', 'User does not exist');
-          // }
+          navigation.navigate('Home');
         }
         else {
-          alert('Errorrrrrrrrrrr', 'User does not exist');
+          alert('Error', 'User does not exist');
         }
       }
 
