@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, Button, View, Modal, Image, TouchableOpacity, Animated, } from 'react-native';
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Ionicons } from '@expo/vector-icons';
-
-
 const ModalPoup = ({ visible, children }) => {
   const [showModal, setShowModal] = React.useState(visible);
   const scaleValue = React.useRef(new Animated.Value(0)).current;

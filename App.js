@@ -28,6 +28,8 @@ const Screen2 = () => {
 
 export default function App() {
   const [firstLaunch, setIsFirstLaunch] = React.useState(false);
+  const [userToken, setUserToken] = React.useState();
+
   React.useEffect(() => {
     AsyncStorage.getItem("alreadyLaunched").then((value) => {
       if (value === null) {
@@ -37,6 +39,14 @@ export default function App() {
         setIsFirstLaunch(false);
       }
     });
+
+      AsyncStorage.getItem("token").then((value) => {
+        if (value === null) {
+          setUserToken(false);
+        } else {
+          setUserToken(true);
+        }
+      }); 
   }, []);
   function HomeNav({navigation}) {
     return (
@@ -136,9 +146,9 @@ export default function App() {
           component={OnboardingScreen}
         />
         )}
+        {firstLaunch && (<Stack.Screen name="LoginScreen" component={LoginScreen} />)}
         <Stack.Screen name="Home" component={HomeNav}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen}/>
         <Stack.Screen name="ScanScreen" component={ScanScreen}/>
         {/* <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen} /> */}

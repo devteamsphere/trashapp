@@ -23,7 +23,7 @@ export default function ScanDetailsScreen({route, navigation}) {
         description: '',
         imgUrl: 'ncoqwjoijciwq',
         status:'pending',
-        dustbinId:'2',
+        dustbinId:route.params.dustbinId,
         userId:'AsyncStorage.getItem("user")._id',
       });
       const [errors, setErrors] = React.useState({});

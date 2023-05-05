@@ -22,6 +22,7 @@ const LoginScreen = ({ navigation }) => {
       if (userdata.data.code === 200) {
         AsyncStorage.setItem("token", userdata.data.data.token);
         AsyncStorage.setItem("user", JSON.stringify(userdata.data.data));
+
         navigation.navigate("Home");
       } else {
         alert("Error", "User does not exist");
