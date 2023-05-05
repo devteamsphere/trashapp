@@ -18,6 +18,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import OnboardingScreen from "./screens/OnboardingScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileScreen from "./screens/ProfileScreen";
+import ScanDetailsScreen from "./screens/ScanDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -125,7 +126,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="OnBoarding"
       >
         {firstLaunch && (
         <Stack.Screen
@@ -134,12 +135,13 @@ export default function App() {
           screenOptions={{ headerShown: false }}
           component={OnboardingScreen}
         />
-       )}
-       
+        )}
+        <Stack.Screen name="Home" component={ScanDetailsScreen}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeNav}/>
-        <Stack.Screen name="ScanScreen" component={ScanScreen} />
+        {/* <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen}/> */}
+        <Stack.Screen name="ScanScreen" component={ScanScreen}/>
+        {/* <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen} /> */}
       </Stack.Navigator>
 
       {/* 

@@ -40,7 +40,7 @@ const ModalPoup = ({ visible, children }) => {
 };
 
 
-const ScanScreen = () => {
+const ScanScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -64,6 +64,7 @@ const ScanScreen = () => {
     setScanned(true);
     setText(data);
     console.log("Type: " + type + "\nData: " + data);
+    navigation.navigate('ScanDetailsScreen');
   };
 
   // Check permissions and return the screens
@@ -118,7 +119,7 @@ const ScanScreen = () => {
       </View>
       <Text style={styles.maintext}>{text}</Text>
 
-      {scanned && (
+      {/* {scanned && (
         <Button
           title={"Scan again?"}
           onPress={() => setScanned(false)}
@@ -131,7 +132,7 @@ const ScanScreen = () => {
           onPress={() => setVisible(true)} 
           color="black"
         />
-      )}
+      )} */}
     </View>
 
   );
