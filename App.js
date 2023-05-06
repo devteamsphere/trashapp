@@ -140,17 +140,17 @@ export default function App() {
       <Stack.Navigator
       initialRouteName="OnBoarding"
       >
-        {/* {firstLaunch && ( */}
+        {firstLaunch && (
         <Stack.Screen
           options={{ headerShown: false }}
           name="OnBoarding"
           screenOptions={{ headerShown: false }}
           component={OnboardingScreen}
         />
-        {/* )} */}
-        {/* {!userToken && ( */}
+        )}
+        {!userToken && (
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        {/* )} */}
+        )}
         <Stack.Screen name="Home" component={HomeNav}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen}/>
