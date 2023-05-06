@@ -19,7 +19,7 @@ import OnboardingScreen from "./screens/OnboardingScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileScreen from "./screens/ProfileScreen";
 import ScanDetailsScreen from "./screens/ScanDetailsScreen";
-
+import PrivateRequestScreen from "./screens/PrivateRequestScreen";
 const Stack = createStackNavigator();
 
 const Screen2 = () => {
@@ -83,7 +83,7 @@ export default function App() {
               <CurvedBottomBarExpo.Screen
               name="title3"
               position="LEFT"
-              component={() => <Home navigation={navigation} />}
+              component={() => <PrivateRequestScreen navigation={navigation} />}
             />
             <CurvedBottomBarExpo.Screen
               name="title2"

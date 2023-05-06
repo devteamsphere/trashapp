@@ -23,6 +23,7 @@ export default function ScanDetailsScreen({route, navigation}) {
         description: '',
         imgUrl: 'ncoqwjoijciwq',
         status:'pending',
+        address:route.params.address,
         dustbinId:route.params.dustbinId,
         userId:'',
       });
