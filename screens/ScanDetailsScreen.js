@@ -24,13 +24,14 @@ export default function ScanDetailsScreen({route, navigation}) {
         imgUrl: 'ncoqwjoijciwq',
         status:'pending',
         dustbinId:route.params.dustbinId,
-        userId:'AsyncStorage.getItem("user")._id',
+        userId:'',
       });
       const [errors, setErrors] = React.useState({});
       const [loading, setLoading] = React.useState(false);
       const [data,setData]=React.useState(route.params);
 ;
       const handleSubmit =async ()=>{
+        console.log(inputs);
         const [error,requestData] = await trashRequest(inputs);
         // console.log(error,"error")
         console.log(requestData);
@@ -47,7 +48,7 @@ export default function ScanDetailsScreen({route, navigation}) {
             if (value === null) {
 
             } else {
-            setInputs(prevState => ({...prevState, userId: value.id}));
+            setInputs(prevState => ({...prevState, userId: JSON.parse(value)._id}));
             }
           });
       }, [])
@@ -67,7 +68,7 @@ export default function ScanDetailsScreen({route, navigation}) {
           Request
         </Text>
         <Text style={{color: COLORS.grey, fontSize: 18, marginVertical: 10}}>
-          Enter the following details
+         {route.params.address}
         </Text>
         <View style={{marginVertical: 20}}>
           <Input

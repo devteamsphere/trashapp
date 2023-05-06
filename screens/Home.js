@@ -20,17 +20,17 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("getting location dhruv");
+      // console.log("getting location dhruv");
       let { status } = await Location.requestForegroundPermissionsAsync();
-      console.log(status);
+      // console.log(status);
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
-        console.log(errorMsg);
+        // console.log(errorMsg);
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
+      // console.log(location);
       setLocation(location);
     })();
   }, []);
@@ -40,7 +40,7 @@ const Home = () => {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text);
+    // console.log(text);
   }
 
   const onButtonClick = () => {
@@ -56,12 +56,28 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+
+
+
+
+
       <WebView
         ref={(r) => (webRef = r)}
         source={{ html: mapTemplate }}
         style={styles.map}
         onMessage={handleMapEvent}
       />
+
+
+
+
+
+
+
+
+
+
+
       {/* <View style={styles.buttons}>
         <TextInput
           style={styles.textInput}

@@ -70,11 +70,13 @@ const OnboardingScreen = ({ navigation }) => {
     AsyncStorage.getAllKeys().then(data => console.log(data));
   };
   const onCheck = () => {
-    if(AsyncStorage.getItem("token") || AsyncStorage.getItem("token") != undefined)
-    navigation.navigate("Home");
-    else{
-      navigation.navigate("LoginScreen");
-    }
+    AsyncStorage.getItem("token").then((value) => {
+      if (value == null) {
+        navigation.navigate('LoginScreen');
+      } else {
+        navigation.navigate('Home');
+      }
+    }); 
   };
 
   const skip = () => {

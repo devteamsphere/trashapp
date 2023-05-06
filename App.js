@@ -40,9 +40,11 @@ export default function App() {
       }
     });
 
+    // console.log('first');
       AsyncStorage.getItem("token").then((value) => {
-        if (value === null) {
+        if (value == null) {
           setUserToken(false);
+          console.log('first');
         } else {
           setUserToken(true);
         }
@@ -138,15 +140,17 @@ export default function App() {
       <Stack.Navigator
       initialRouteName="OnBoarding"
       >
-        {firstLaunch && (
+        {/* {firstLaunch && ( */}
         <Stack.Screen
           options={{ headerShown: false }}
           name="OnBoarding"
           screenOptions={{ headerShown: false }}
           component={OnboardingScreen}
         />
-        )}
-        {firstLaunch && (<Stack.Screen name="LoginScreen" component={LoginScreen} />)}
+        {/* )} */}
+        {/* {!userToken && ( */}
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        {/* )} */}
         <Stack.Screen name="Home" component={HomeNav}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen}/>
