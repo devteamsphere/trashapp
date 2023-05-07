@@ -20,6 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileScreen from "./screens/ProfileScreen";
 import ScanDetailsScreen from "./screens/ScanDetailsScreen";
 import PrivateRequestScreen from "./screens/PrivateRequestScreen";
+import UploadImageScreen from "./screens/UploadImageScreen";
 const Stack = createStackNavigator();
 
 const Screen2 = () => {
@@ -155,7 +156,7 @@ export default function App() {
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen}/>
         <Stack.Screen name="ScanScreen" component={ScanScreen}/>
-        {/* <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen} /> */}
+        <Stack.Screen name="UploadImageScreen" component={UploadImageScreen} />
       </Stack.Navigator>
 
       {/* 

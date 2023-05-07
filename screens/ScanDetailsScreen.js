@@ -21,7 +21,7 @@ export default function ScanDetailsScreen({route, navigation}) {
         latitude: route.params.latitude,
         longitude: route.params.longitude,
         description: '',
-        imgUrl: 'ncoqwjoijciwq',
+        imgUrl: '',
         status:'pending',
         address:route.params.address,
         dustbinId:route.params.dustbinId,
@@ -31,16 +31,21 @@ export default function ScanDetailsScreen({route, navigation}) {
       const [loading, setLoading] = React.useState(false);
       const [data,setData]=React.useState(route.params);
 ;
-      const handleSubmit =async ()=>{
+const setImage=()=>{
+  setInputs(prevState => ({...prevState, imgUrl: JSON.stringify(route.params.photo)}));
+console.log(inputs);
+    
+}
+      const handleSubmit =async ()=>{ 
         console.log(inputs);
         const [error,requestData] = await trashRequest(inputs);
-        // console.log(error,"error")
+        console.log(error,"error")
         console.log(requestData);
         if(requestData){
           navigation.navigate('Home');
         }
         else {
-          alert('Error', 'User does not exist');
+          alert(error, 'User does not exist');
         }
       }
 
@@ -52,6 +57,7 @@ export default function ScanDetailsScreen({route, navigation}) {
             setInputs(prevState => ({...prevState, userId: JSON.parse(value)._id}));
             }
           });
+
       }, [])
       
       const handleOnchange = (text, input) => {
@@ -69,7 +75,7 @@ export default function ScanDetailsScreen({route, navigation}) {
           Request
         </Text>
         <Text style={{color: COLORS.grey, fontSize: 18, marginVertical: 10}}>
-         {route.params.address}
+         {inputs.address}
         </Text>
         <View style={{marginVertical: 20}}>
           <Input
@@ -101,6 +107,9 @@ export default function ScanDetailsScreen({route, navigation}) {
             placeholder=""
             error={errors.description}
           />
+{route.params.flag!=false?<Button title="Upload Image" onPress={()=>{
+            navigation.navigate('UploadImageScreen',inputs,setInputs);
+           }}/>:<Button title="Upload" onPress={setImage}/>}
           <Button title="Submit" onPress={handleSubmit}/>
         </View>
       </ScrollView>
