@@ -112,13 +112,13 @@
     <script>
         const apiKey = 'q2yukmABGuRvQD9NhkGAABCOYtIMoHFD';
 
-        const passengerInitCoordinates = [75.5324805, 30.3660051];
+        const passengerInitCoordinates = [75.5324774, 30.3660445];
 
         let passengerMarker;
 
         let taxiPassengerBatchCoordinates = [];
         let taxiConfig;
-        const zoomLevel = 13;
+        const zoomLevel = 18;
 
         let routes = [];
         let bestRouteIndex;
@@ -170,10 +170,10 @@
 
         function setDefaultTaxiConfig() {
             taxiConfig = [
-                createTaxi('CAR #1', '#006967', [4.902642, 52.373627], 'img/cab1.png'),
-                createTaxi('CAR #2', '#EC619F', [4.927198, 52.365927], 'img/cab2.png'),
-                createTaxi('CAR #3', '#002C5E', [4.893488, 52.347878], 'img/cab3.png'),
-                createTaxi('CAR #4', '#F9B023', [4.858433, 52.349447], 'img/cab4.png')
+                createTaxi('CAR #1', '#006967', [75.5323774, 30.3650445], 'img/cab1.png'),
+                createTaxi('CAR #2', '#EC619F', [75.5325774, 30.3460445], 'img/cab2.png'),
+                createTaxi('CAR #3', '#002C5E', [75.5324974, 30.3668445], 'img/cab3.png'),
+                createTaxi('CAR #4', '#F9B023', [75.532374, 30.3664445], 'img/cab4.png')
             ];
         }
 
