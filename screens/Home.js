@@ -13,20 +13,28 @@ import {
 import { useEffect } from "react";
 import * as Location from "expo-location";
 import Card from "../components/Card";
+import { getPendingDustbinRequest } from "../services/driver.api";
 
 const Home = () => {
   const [location, setLocation] = useState(null);
   const [destination, setDestination] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [data, setData] = useState(null);
+
+  const setRequestData = async () => {
+    const [err, res] = await getPendingDustbinRequest(location);
+    if (err) {
+      alert("Error");
+    }
+    console.log(res);
+  };
 
   useEffect(() => {
     (async () => {
-      // console.log("getting location dhruv");
       let { status } = await Location.requestForegroundPermissionsAsync();
-      // console.log(status);
+
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
-        // console.log(errorMsg);
         return;
       }
 
@@ -81,36 +89,6 @@ const Home = () => {
   ];
 
   return (
-    // <View style={styles.container}>
-    //   {/* pass props to card */}
-    //   <Card
-    //     pickUpTitle="UIT RGPV BHOPAL"
-    //     pickUpAddress="Public Dustin is full of garbage, please clean it."
-    //     pickUpTime="25 mins 30 sec "
-    //     onPress={redirectToUser}
-    //   />
-
-    //   <Card
-    //     pickUpTitle="UIT RGPV BHOPAL"
-    //     pickUpAddress="Public Dustin is full of garbage, please clean it."
-    //     pickUpTime="25 mins 30 sec "
-    //     onPress={redirectToUser}
-    //   />
-    //   <Card
-    //     pickUpTitle="UIT RGPV BHOPAL"
-    //     pickUpAddress="Public Dustin is full of garbage, please clean it."
-    //     pickUpTime="25 mins 30 sec "
-    //     onPress={redirectToUser}
-    //   />
-
-    //   <Card
-    //     pickUpTitle="UIT RGPV BHOPAL"
-    //     pickUpAddress="Public Dustin is full of garbage, please clean it."
-    //     pickUpTime="25 mins 30 sec "
-    //     onPress={redirectToUser}
-    //   />
-    // </View>
-
     <SafeAreaView style={styles.container}>
       <FlatList
         showsHorizontalScrollIndicator={false}
@@ -128,7 +106,6 @@ const Home = () => {
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>
-   
   );
 };
 
