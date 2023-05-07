@@ -32,7 +32,7 @@ export default function ScanDetailsScreen({route, navigation}) {
       const [data,setData]=React.useState(route.params);
 ;
 const setImage=()=>{
-  setInputs(prevState => ({...prevState, imgUrl: JSON.stringify(route.params.photo)}));
+  // setInputs(prevState => ({...prevState, imgUrl: JSON.stringify(route.params.photo)}));
 console.log(inputs);
     
 }
