@@ -23,7 +23,7 @@ export default function PrivateRequestScreen({ navigation }) {
         address: '',
         imgUrl: 'ncoqwjoijciwq',
         status: 'pending',
-        dustbinId:'55555',
+        dustbinId:'5999999',
         userId: '',
     });
     const [errors, setErrors] = React.useState({});
