@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const COLORS = { primary: "#fff", white: "#00A86B" };
 
 const slides = [
@@ -67,6 +67,16 @@ const OnboardingScreen = ({ navigation }) => {
       ref?.current.scrollToOffset({ offset });
       setCurrentSlideIndex(currentSlideIndex + 1);
     }
+    AsyncStorage.getAllKeys().then(data => console.log(data));
+  };
+  const onCheck = () => {
+    AsyncStorage.getItem("token").then((value) => {
+      if (value == null) {
+        navigation.navigate('LoginScreen');
+      } else {
+        navigation.navigate('Home');
+      }
+    }); 
   };
 
   const skip = () => {
@@ -114,7 +124,7 @@ const OnboardingScreen = ({ navigation }) => {
             <View style={{ height: 50 }}>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => navigation.replace('Home')}
+                onPress={onCheck}
               >
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>
                   GET STARTED

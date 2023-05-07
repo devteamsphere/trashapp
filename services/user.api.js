@@ -21,6 +21,7 @@ export const signup = async (data) => {
 export const trashRequest = async (data) => {
   let response = null; 
   let err = null; 
+  
   await axios 
     .post(`${url}/api/trashRequest/newtrashRequest `, data)
     .then((res) => { 
@@ -29,6 +30,7 @@ export const trashRequest = async (data) => {
       response = res.data; 
     }) 
     .catch((error) => { 
+      err=error;
       // console.log(error)
       // if (error) { 
       //   // The request was made and the server responded with a non-2xx status code 

@@ -21,12 +21,12 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("getting location dhruv");
+      // console.log("getting location dhruv");
       let { status } = await Location.requestForegroundPermissionsAsync();
-      console.log(status);
+      // console.log(status);
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
-        console.log(errorMsg);
+        // console.log(errorMsg);
         return;
       }
 
@@ -41,7 +41,7 @@ const Home = () => {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text);
+    // console.log(text);
   }
   const redirectToUser = (destination) => {
     const redirectToGoogleMaps = (startingPoint, destination) => {
@@ -128,6 +128,7 @@ const Home = () => {
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>
+   
   );
 };
 

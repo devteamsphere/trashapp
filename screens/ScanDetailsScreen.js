@@ -14,35 +14,33 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ScanDetailsScreen() {
+export default function ScanDetailsScreen({route, navigation}) {
+
     const [inputs, setInputs] = React.useState({
         requestType: 'public',
-        latitude: 'jeqohfuiehfhe',
-        longitude: 'fejofoqhofqa',
+        latitude: route.params.latitude,
+        longitude: route.params.longitude,
         description: '',
         imgUrl: 'ncoqwjoijciwq',
         status:'pending',
-        dustbinId:'2',
-        userId:'222',
+        address:route.params.address,
+        dustbinId:route.params.dustbinId,
+        userId:'',
       });
       const [errors, setErrors] = React.useState({});
       const [loading, setLoading] = React.useState(false);
-
+      const [data,setData]=React.useState(route.params);
+;
       const handleSubmit =async ()=>{
+        console.log(inputs);
         const [error,requestData] = await trashRequest(inputs);
         // console.log(error,"error")
         console.log(requestData);
         if(requestData){
-          // if (requestData.data.code === 200) {
-          //   console.log('hsr');
-          //   navigation.navigate('Home');
-          // }
-          // else {
-          //   alert('Error', 'User does not exist');
-          // }
+          navigation.navigate('Home');
         }
         else {
-          alert('Errorrrrrrrrrrr', 'User does not exist');
+          alert('Error', 'User does not exist');
         }
       }
 
@@ -51,7 +49,7 @@ export default function ScanDetailsScreen() {
             if (value === null) {
 
             } else {
-            setInputs(prevState => ({...prevState, userId: value.id}));
+            setInputs(prevState => ({...prevState, userId: JSON.parse(value)._id}));
             }
           });
       }, [])
@@ -71,7 +69,7 @@ export default function ScanDetailsScreen() {
           Request
         </Text>
         <Text style={{color: COLORS.grey, fontSize: 18, marginVertical: 10}}>
-          Enter the following details
+         {route.params.address}
         </Text>
         <View style={{marginVertical: 20}}>
           <Input

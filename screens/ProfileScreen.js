@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {
   Avatar,
@@ -7,12 +7,13 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
-import { AntDesign,Ionicons } from '@expo/vector-icons'; 
+import {Ionicons } from '@expo/vector-icons'; 
 // import Share from 'react-native-share';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
 
 //   const myCustomShare = async() => {
 //     const shareOptions = {
@@ -28,6 +29,26 @@ const ProfileScreen = () => {
 //       console.log('Error => ', error);
 //     }
 //   };
+const [data, setData] = useState({});
+
+useEffect(() => {
+  const getData = async () => {
+    
+    try {
+      const value = await AsyncStorage.getItem('user')
+      if(value != null) {
+        setData(JSON.parse(value));
+        console.log(JSON.parse(value));
+  
+      }
+    } catch(e) {
+      // error reading value
+      console.log("error");
+    }
+  }
+getData();  
+}, [])
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,8 +65,8 @@ const ProfileScreen = () => {
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>John Doe</Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+            }]}>{data?data.firstName:null}</Title>
+            <Caption style={styles.caption}>_joe</Caption>
           </View>
         </View>
       </View>
@@ -53,15 +74,15 @@ const ProfileScreen = () => {
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Ionicons name="location" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Kolkata, India</Text>
+          <Text style={{color:"#777777", marginLeft: 20}}>{data?data.address:null}</Text>
         </View>
         <View style={styles.row}>
           <Ionicons name="ios-call" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>+91-900000009</Text>
+          <Text style={{color:"#777777", marginLeft: 20}}>{data?data.contactNo:null}</Text>
         </View>
         <View style={styles.row}>
           <Ionicons name="mail" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>john_doe@email.com</Text>
+          <Text style={{color:"#777777", marginLeft: 20}}>{data?data.email:null}</Text>
         </View>
       </View>
 
@@ -70,11 +91,11 @@ const ProfileScreen = () => {
             borderRightColor: '#dddddd',
             borderRightWidth: 1
           }]}>
-            <Title>₹140.50</Title>
+            <Title>₹{data?data.credits:null}</Title>
             <Caption>Wallet</Caption>
           </View>
           <View style={styles.infoBox}>
-            <Title>12</Title>
+            <Title>{data?data.resolvedRequest:null}</Title>
             <Caption>Orders</Caption>
           </View>
       </View>
