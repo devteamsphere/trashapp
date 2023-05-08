@@ -134,6 +134,7 @@ const ScanScreen = ({navigation}) => {
           color="black"
         />
       )} */}
+
     </View>
 
   );

@@ -21,6 +21,8 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ScanDetailsScreen from "./screens/ScanDetailsScreen";
 import PrivateRequestScreen from "./screens/PrivateRequestScreen";
 import UploadImageScreen from "./screens/UploadImageScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+// import SheetScreen from "./screens/SheetScreen";
 const Stack = createStackNavigator();
 
 const Screen2 = () => {
@@ -93,7 +95,7 @@ export default function App() {
             />
                         <CurvedBottomBarExpo.Screen
               name="title4"
-              component={() => <Screen2 />}
+              component={() => <PaymentScreen navigation={navigation}/>}
               position="RIGHT"
             />
           </CurvedBottomBarExpo.Navigator>
