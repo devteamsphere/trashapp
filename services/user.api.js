@@ -18,6 +18,15 @@ export const signup = async (data) => {
     console.log(error);
   }
 }
+
+export const getUser = async (id) => {
+  try {
+    console.log(id);
+    return await axios.get(`${url}/api/users/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const trashRequest = async (data) => {
   let response = null; 
   let err = null; 

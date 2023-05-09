@@ -10,7 +10,7 @@ import {
 import {Ionicons } from '@expo/vector-icons'; 
 // import Share from 'react-native-share';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import {getUser} from "../services/user.api"
 
 
 const ProfileScreen = ({navigation}) => {
@@ -33,17 +33,16 @@ const [data, setData] = useState({});
 
 useEffect(() => {
   const getData = async () => {
-    
-    try {
-      const value = await AsyncStorage.getItem('user')
-      if(value != null) {
-        setData(JSON.parse(value));
-        console.log(JSON.parse(value));
-  
-      }
-    } catch(e) {
-      // error reading value
-      console.log("error");
+    console.log('firstLaunch');
+    const id= await AsyncStorage.getItem('user');
+    const requestData = await getUser(JSON.parse(id)._id);
+    console.log(requestData);
+    if (requestData) {
+      console.log(requestData);
+      setData(requestData.data);
+    }
+    else {
+      alert('User does not exist');
     }
   }
 getData();  
