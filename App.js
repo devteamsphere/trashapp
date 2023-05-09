@@ -1,259 +1,254 @@
-import React from "react";
-import {
-  Alert,
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { NavigationContainer } from "@react-navigation/native";
-import RegisterScreen from "./screens/RegisterScreen";
-import Home from "./screens/Home.js";
-import LoginScreen from "./screens/LoginScreen.js";
-import ScanScreen from "./screens/ScanScreen.js";
-import { createStackNavigator } from "@react-navigation/stack";
-// import { TailwindProvider } from "tailwindcss-react-native";
-import OnboardingScreen from "./screens/OnboardingScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ProfileScreen from "./screens/ProfileScreen";
-import ScanDetailsScreen from "./screens/ScanDetailsScreen";
-import PrivateRequestScreen from "./screens/PrivateRequestScreen";
-import UploadImageScreen from "./screens/UploadImageScreen";
-import PaymentScreen from "./screens/PaymentScreen";
-// import SheetScreen from "./screens/SheetScreen";
-const Stack = createStackNavigator();
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { Animated, Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Screen2 = () => {
-  return <View style={styles.screen2} />;
-};
+// Plus...
+import plus from './assets/plus.png'
 
+// Font Awesome Icons...
+import { FontAwesome5 } from '@expo/vector-icons'
+import { useRef } from 'react';
+import ProfileScreen from './screens/ProfileScreen';
+
+const Tab = createBottomTabNavigator();
+
+// Hiding Tab Names...
 export default function App() {
-  const [firstLaunch, setIsFirstLaunch] = React.useState(false);
-  const [userToken, setUserToken] = React.useState();
 
-  React.useEffect(() => {
-    AsyncStorage.getItem("alreadyLaunched").then((value) => {
-      if (value === null) {
-        AsyncStorage.setItem("alreadyLaunched", "true");
-        setIsFirstLaunch(true);
-      } else {
-        setIsFirstLaunch(false);
-      }
-    });
-
-    // console.log('first');
-      AsyncStorage.getItem("token").then((value) => {
-        if (value == null) {
-          setUserToken(false);
-          console.log('first');
-        } else {
-          setUserToken(true);
-        }
-      }); 
-  }, []);
-  function HomeNav({navigation}) {
-    return (
-  <CurvedBottomBarExpo.Navigator
-  screenOptions={{headerShown: false}}
-            type="DOWN"
-            style={styles.bottomBar}
-            shadowStyle={styles.shawdow}
-            height={55}
-            circleWidth={25}
-            bgColor="#00A86B"
-            initialRouteName="Home"
-            borderTopLeftRight
-            renderCircle={({ selectedTab, navigate }) => (
-              <Animated.View style={styles.btnCircleUp}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => navigate('ScanScreen')}
-                  // component={() => <ScanScreen navigation={navigation} />}
-                >
-                  <Ionicons name={'qr-code-outline'} color="gray" size={25} />
-                </TouchableOpacity>
-              </Animated.View>
-            )}
-            tabBar={renderTabBar}
-          >
-            <CurvedBottomBarExpo.Screen
-              name="title1"
-              position="LEFT"
-              component={() => <Home navigation={navigation} />}
-            />
-              <CurvedBottomBarExpo.Screen
-              name="title3"
-              position="LEFT"
-              component={() => <PrivateRequestScreen navigation={navigation} />}
-            />
-            <CurvedBottomBarExpo.Screen
-              name="title2"
-              component={() => <ProfileScreen />}
-              position="RIGHT"
-            />
-                        <CurvedBottomBarExpo.Screen
-              name="title4"
-              component={() => <PaymentScreen navigation={navigation}/>}
-              position="RIGHT"
-            />
-          </CurvedBottomBarExpo.Navigator>
-    );
-  }
-  const _renderIcon = (routeName, selectedTab) => {
-    let icon = "";
-
-    switch (routeName) {
-      case "title1":
-        icon = "ios-home-outline";
-        break;
-      case "title2":
-        icon = "cart-outline";
-        break;
-      case "title3":
-        icon = "location-outline";
-        break;
-      case "title4":
-        icon = "settings-outline";
-        break;
-    }
-
-    return (
-      <Ionicons
-        name={icon}
-        size={25}
-        color={routeName === selectedTab ? "black" : "#ddd"}
-      />
-    );
-  };
-  const renderTabBar = ({ routeName, selectedTab, navigate }) => {
-    return (
-      <TouchableOpacity
-        onPress={() => navigate(routeName)}
-        style={styles.tabbarItem}
-      >
-        {_renderIcon(routeName, selectedTab)}
-      </TouchableOpacity>
-    );
-  };
-
+  // Animated Tab Indicator...
+  const tabOffsetValue = useRef(new Animated.Value(0)).current;
   return (
     <NavigationContainer>
-      <Stack.Navigator
-      initialRouteName="OnBoarding"
-      >
-        {firstLaunch && (
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="OnBoarding"
-          screenOptions={{ headerShown: false }}
-          component={OnboardingScreen}
-        />
-        )}
-        {!userToken && (
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        )}
-        <Stack.Screen name="Home" component={HomeNav}/>
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        <Stack.Screen name="ScanDetailsScreen" component={ScanDetailsScreen}/>
-        <Stack.Screen name="ScanScreen" component={ScanScreen}/>
-        <Stack.Screen name="UploadImageScreen" component={UploadImageScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator tabBarOptions={{
+        showLabel: false,
+        // Floating Tab Bar...
+        style: {
+          backgroundColor: 'white',
+          position: 'absolute',
+          bottom: 0,
+          marginHorizontal: 20,
+          // Max Height...
+          height: 60,
+          borderRadius: 10,
+          // Shadow...
+          shadowColor: '#000',
+          shadowOpacity: 0.06,
+          shadowOffset: {
+            width: 10,
+            height: 10
+          },
+          // paddingHorizontal: 20,
+        }
+      }}>
 
-      {/* 
-        <CurvedBottomBarExpo.Navigator
-          type="DOWN"
-          style={styles.bottomBar}
-          shadowStyle={styles.shawdow}
-          height={55}
-          circleWidth={50}
-          bgColor="white"
-          initialRouteName="title1"
-          borderTopLeftRight
-          renderCircle={({ selectedTab, navigate }) => (
-            <Animated.View style={styles.btnCircleUp}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => Alert.alert('Click Action')}
-              >
-                <Ionicons name={'apps-sharp'} color="gray" size={25} />
-              </TouchableOpacity>
-            </Animated.View>
-          )}
-          tabBar={renderTabBar}
-        >
-          <CurvedBottomBarExpo.Screen
-            name="title1"
-            position="LEFT"
-            component={() => <Home navigation={navigation} />}
-          />
-          <CurvedBottomBarExpo.Screen
-            name="title2"
-            component={() => <Screen2 />}
-            position="RIGHT"
-          />
-        </CurvedBottomBarExpo.Navigator> */}
+        {
+          // Tab Screens....
+
+          // Tab ICons....
+        }
+        <Tab.Screen name={"Home"} component={HomeScreen} options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              // centring Tab Button...
+              position: 'absolute',
+              top: 20
+            }}>
+              <FontAwesome5
+                name="home"
+                size={20}
+                color={focused ? '#8256d0' : 'gray'}
+              ></FontAwesome5>
+            </View>
+          )
+        }} listeners={({ navigation, route }) => ({
+          // Onpress Update....
+          tabPress: e => {
+            Animated.spring(tabOffsetValue, {
+              toValue: 0,
+              useNativeDriver: true
+            }).start();
+          }
+        })}></Tab.Screen>
+
+        <Tab.Screen name={"Search"} component={SearchScreen} options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              // centring Tab Button...
+              position: 'absolute',
+              top: 20
+            }}>
+              <FontAwesome5
+                name="search"
+                size={20}
+                color={focused ? '#8256d0' : 'gray'}
+              ></FontAwesome5>
+            </View>
+          )
+        }} listeners={({ navigation, route }) => ({
+          // Onpress Update....
+          tabPress: e => {
+            Animated.spring(tabOffsetValue, {
+              toValue: getWidth()*1.2,
+              useNativeDriver: true
+            }).start();
+          }
+        })}></Tab.Screen>
+
+
+        {
+
+          // Extra Tab Screen For Action Button..
+        }
+
+        <Tab.Screen name={"ActionButton"} component={EmptyScreen} options={{
+          tabBarIcon: ({ focused }) => (
+
+            <TouchableOpacity>
+              <View style={{
+                width: 55,
+                height: 55,
+                backgroundColor: '#8256d0',
+                borderRadius: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: Platform.OS == "android" ? 50 : 30
+              }}>
+                <Image source={plus} style={{
+                  width: 22,
+                  height: 22,
+                  tintColor: 'white',
+                }}></Image>
+              </View>
+            </TouchableOpacity>
+          )
+        }}></Tab.Screen>
+
+        <Tab.Screen name={"Notifications"} component={NotificationScreen} options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              // centring Tab Button...
+              position: 'absolute',
+              top: 20
+            }}>
+              <FontAwesome5
+                name="bell"
+                size={20}
+                color={focused ? '#8256d0' : 'gray'}
+              ></FontAwesome5>
+            </View>
+          )
+        }} listeners={({ navigation, route }) => ({
+          // Onpress Update....
+          tabPress: e => {
+            Animated.spring(tabOffsetValue, {
+              toValue: getWidth() * 3.8,
+              useNativeDriver: true
+            }).start();
+          }
+        })}></Tab.Screen>
+
+        <Tab.Screen name={"Settings"} component={ProfileScreen} options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              // centring Tab Button...
+              position: 'absolute',
+              top: 20
+            }}>
+              <FontAwesome5
+                name="user-alt"
+                size={20}
+                color={focused ? '#8256d0' : 'gray'}
+              ></FontAwesome5>
+            </View>
+          )
+        }} listeners={({ navigation, route }) => ({
+          // Onpress Update....
+          tabPress: e => {
+            Animated.spring(tabOffsetValue, {
+              toValue: getWidth() * 5.2,
+              useNativeDriver: true
+            }).start();
+          }
+        })}></Tab.Screen>
+
+      </Tab.Navigator>
+
+      <Animated.View style={{
+        width: 50,
+        height: 2,
+        backgroundColor: '#8256d0',
+        position: 'absolute',
+        bottom: 50,
+        // Horizontal Padding = 20...
+        left: 10,
+        borderRadius: 20,
+        transform: [
+          { translateX: tabOffsetValue }
+        ]
+      }}>
+
+      </Animated.View>
     </NavigationContainer>
   );
 }
 
-export const styles = StyleSheet.create({
+function getWidth() {
+  let width = Dimensions.get("window").width
+
+  // Horizontal Padding = 20...
+  width = width - 80
+
+  // Total five Tabs...
+  return width / 5
+}
+
+function EmptyScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    </View>
+  );
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Settings!</Text>
+    </View>
+  );
+}
+
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
+  );
+}
+
+function NotificationScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Notifications!</Text>
+    </View>
+  );
+}
+
+function SearchScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Search!</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-  },
-  shawdow: {
-    shadowColor: "#DDDDDD",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 5,
-  },
-  button: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  bottomBar: {},
-  btnCircleUp: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#E8E8E8",
-    bottom: 30,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 1,
-  },
-  imgCircle: {
-    width: 30,
-    height: 30,
-    tintColor: "gray",
-  },
-  tabbarItem: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  img: {
-    width: 30,
-    height: 30,
-  },
-  screen1: {
-    flex: 1,
-    backgroundColor: "#BFEFFF",
-  },
-  screen2: {
-    flex: 1,
-    backgroundColor: "#FFEBCD",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

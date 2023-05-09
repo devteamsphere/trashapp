@@ -102,13 +102,13 @@ getData();
       <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Ionicons name="heart" color="#FF6347" size={25}/>
+            <Ionicons name="heart" color="#000000" size={25}/>
             <Text style={styles.menuItemText}>Your Favorites</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Ionicons name="card" color="#FF6347" size={25}/>
+            <Ionicons name="card" color="#000000" size={25}/>
             <Text style={styles.menuItemText}>Payment</Text>
           </View>
         </TouchableRipple>
@@ -116,19 +116,19 @@ getData();
         // onPress={myCustomShare}
         >
           <View style={styles.menuItem}>
-            <Ionicons name="share" color="#FF6347" size={25}/>
+            <Ionicons name="share" color="#000000" size={25}/>
             <Text style={styles.menuItemText}>Tell Your Friends</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Ionicons name="help" color="#FF6347" size={25}/>
+            <Ionicons name="help" color="#000000" size={25}/>
             <Text style={styles.menuItemText}>Support</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Ionicons name="settings" color="#FF6347" size={25}/>
+            <Ionicons name="settings" color="#000000" size={25}/>
             <Text style={styles.menuItemText}>Settings</Text>
           </View>
         </TouchableRipple>
