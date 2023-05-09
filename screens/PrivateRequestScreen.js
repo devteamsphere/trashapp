@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import { trashRequest } from "../services/user.api";
 import Modal from "react-native-modal";
+import { payment } from "../services/user.api";
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Toast from 'react-native-toast-message';
 import COLORS from '../theme/colors';
@@ -64,18 +66,26 @@ export default function PrivateRequestScreen({ navigation }) {
     }
   }
   const handlePayment = async () => {
+    const requestData = await payment(inputs.userId,50);
+    console.log(requestData);
+    if (requestData) {
+    }
+    else {
+      alert( 'payment failed');
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       Toast.show({
         type: "success",
-        text1: "Payment Successfull",
+        text1: "Payment Successful",
         text2: "₹50 paid to driver",
         position: "top",
   
       })
       setModalVisible(!isModalVisible);
       setStatus(true);
+    
     }, 4000);
 
   }
@@ -215,7 +225,7 @@ export default function PrivateRequestScreen({ navigation }) {
                     Pay
                   </Text> 
 
-                </TouchableOpacity>:<Text style={{color:"008A6B"}}>Successfull</Text>}
+                </TouchableOpacity>:<Text>Successful</Text>}
               </View>
             </View>
           </View>

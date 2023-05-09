@@ -53,3 +53,11 @@ export const trashRequest = async (data) => {
     }); 
   return [err, response];
 }
+export const payment = async (userId,amount) => {
+  try {
+    console.log("hi");
+    return await axios.put(`${url}/api/users/updateUserCredits/?userId=${userId}&amount=${amount}` );
+  } catch (error) {
+    console.log(error);
+  }
+}
